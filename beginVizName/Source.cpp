@@ -48,7 +48,6 @@ int main() {
 
 
 
-
 	// build and compile our shader program
 	// ------------------------------------
 	// vertex shader. Takes a single vertex as input and transforms 3D coordinates into other 3D coordinates / performs basic processing on vertex attributes. GL_VER.. = shader type
