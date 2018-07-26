@@ -127,6 +127,10 @@
   <ItemGroup>
     <ClInclude Include="Header.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="shader.fs.txt" />
+    <Text Include="shader.vs.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
