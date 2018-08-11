@@ -67,6 +67,9 @@ int main() {
 	// now, calling GL_ARR.. configures our currently bound buffer (VBO). function below copies data into our buffer.
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 	// Position attribute
 	// Tell OpenGL how it should interpret the vertex data (per vertex attribute). pass in 0 because we want to change the position attribute (which we gave as 0 in our class instantiation string).
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
@@ -151,7 +154,7 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// bind textures on corresponding texture units
+		// bind textures on corresponding texture units (units == location)
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture1);
 		glActiveTexture(GL_TEXTURE1);
