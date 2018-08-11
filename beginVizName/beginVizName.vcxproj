@@ -123,9 +123,11 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Downloads\src\glad.c" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="stbAssist.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h" />
+    <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="shader.fs.txt" />
