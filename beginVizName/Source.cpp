@@ -40,12 +40,13 @@ int main() {
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
 	float vertices[] = {
-		// positions          // colors           // texture coords
-		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+		// positions          // colors           // texture coords (these are how we retrieve texture color (sampling). coords start at (0,0) to (1,1)
+		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   0.2f, 0.2f, // top right
+		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   0.2f, 0.0f, // bottom right
 		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 0.2f  // top left 
 	};
+	//Indices are used to avoid repeat rendering of shapes via duplicate vertex data.
 	unsigned int indices[] = {
 		0, 1, 3, // first triangle
 		1, 2, 3  // second triangle
@@ -92,8 +93,8 @@ int main() {
 	glGenTextures(1, &texture1);
 	glBindTexture(GL_TEXTURE_2D, texture1);
 	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	// set texture filtering parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -120,8 +121,8 @@ int main() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	// load image, create texture and generate mipmaps
 	data = stbi_load("awesomeface.png", &width, &height, &nrChannels, 0);
 	if (data)
@@ -145,9 +146,10 @@ int main() {
 	ourShader.setInt("texture2", 1);
 
 
+
 	// Render loop, goes until instructed to close
 	while (!glfwWindowShouldClose(window)) {
-		processInput(window);
+		processInput(window, ratioTextures);
 
 		/* We are clearing the screen while simultaneously coloring it. Initial Render. 
 		glClearColor sets the state, and glClear makes use of it */
@@ -187,7 +189,13 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 }
 
 // Currently, takes input key strokes and exits program if esc key given
-void processInput(GLFWwindow *window) {
+void processInput(GLFWwindow *window, Shader ourShaderRef) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		//last hw question
+		GLint ratioTextures = glGetUniformLocation(ourShaderRef.ID, "ratioo");
+		GLfloat ratioValue = 0;
+		glGetUniformfv(ourShaderRef.ID, ratioTextures, &ratioValue);
+		//glUniform1f(ratioTextures, )
 }

@@ -5,11 +5,13 @@ in vec3 ourColor;
 in vec2 TexCoord;
 
 // texture samplers
+// Uniforms dont change from one execution of the shader program to the next. Unlike data sent through buffers, which is generally always changing. 
 uniform sampler2D texture1;
 uniform sampler2D texture2;
+uniform float ratioo = 0.5;
 
 void main()
 {
 	// linearly interpolate between both textures (80% container, 20% awesomeface)
-	FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
+	FragColor = mix(texture(texture1, TexCoord), texture(texture2, vec2(TexCoord.x * -1, TexCoord.y)), 0.2);
 }
