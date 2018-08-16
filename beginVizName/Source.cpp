@@ -146,10 +146,9 @@ int main() {
 	ourShader.setInt("texture2", 1);
 
 
-
 	// Render loop, goes until instructed to close
 	while (!glfwWindowShouldClose(window)) {
-		processInput(window, ratioTextures);
+		processInput(window);
 
 		/* We are clearing the screen while simultaneously coloring it. Initial Render. 
 		glClearColor sets the state, and glClear makes use of it */
@@ -189,13 +188,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 }
 
 // Currently, takes input key strokes and exits program if esc key given
-void processInput(GLFWwindow *window, Shader ourShaderRef) {
+void processInput(GLFWwindow *window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-		//last hw question
-		GLint ratioTextures = glGetUniformLocation(ourShaderRef.ID, "ratioo");
-		GLfloat ratioValue = 0;
-		glGetUniformfv(ourShaderRef.ID, ratioTextures, &ratioValue);
-		//glUniform1f(ratioTextures, )
 }
