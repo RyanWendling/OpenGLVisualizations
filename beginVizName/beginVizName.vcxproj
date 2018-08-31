@@ -132,6 +132,8 @@
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="1.lamp.fs.txt" />
+    <Text Include="1.lamp.vs.txt" />
     <Text Include="shader.fs.txt" />
     <Text Include="shader.vs.txt" />
   </ItemGroup>

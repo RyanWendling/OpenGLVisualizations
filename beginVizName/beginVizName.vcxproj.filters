@@ -39,5 +39,7 @@
   <ItemGroup>
     <Text Include="shader.fs.txt" />
     <Text Include="shader.vs.txt" />
+    <Text Include="1.lamp.fs.txt" />
+    <Text Include="1.lamp.vs.txt" />
   </ItemGroup>
 </Project>
