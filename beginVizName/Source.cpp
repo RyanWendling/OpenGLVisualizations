@@ -192,13 +192,20 @@ int main() {
 
 		/* We are clearing the screen while simultaneously coloring it. Initial Render.
 		glClearColor sets the state, and glClear makes use of it */
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClearColor(0.75f, 0.52f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
 
 		// be sure to activate shader when setting uniforms/drawing objects
 		lightingShader.use();
 		lightingShader.setVec3("viewPos", camera.Position);
 		lightingShader.setFloat("material.shininess", 32.0f);
+
+		glm::vec3 pointLightColors[] = {
+			glm::vec3(1.0f, 0.6f, 0.0f),
+			glm::vec3(1.0f, 0.0f, 0.0f),
+			glm::vec3(1.0f, 1.0, 0.0),
+			glm::vec3(0.2f, 0.2f, 1.0f)
+		};
 
 		/*
 		Here we set all the uniforms for the 5/6 types of lights we have. We have to set them manually and index
@@ -207,10 +214,10 @@ int main() {
 		by using 'Uniform buffer objects', but that is something we'll discuss in the 'Advanced GLSL' tutorial.
 		*/
 		// directional light
-		lightingShader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
-		lightingShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
-		lightingShader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
-		lightingShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+		lightingShader.setVec3("dirLight.direction", pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z );
+		lightingShader.setVec3("dirLight.ambient", pointLightColors[0].x * 0.1, pointLightColors[0].y * 0.1, pointLightColors[0].z * 0.1);
+		lightingShader.setVec3("dirLight.diffuse", pointLightColors[0].x, pointLightColors[0].y, pointLightColors[0].z);
+		lightingShader.setVec3("dirLight.specular", pointLightColors[0].x, pointLightColors[0].y, pointLightColors[0].z);
 		// point light 1
 		lightingShader.setVec3("pointLights[0].position", pointLightPositions[0]);
 		lightingShader.setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
